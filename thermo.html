@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>90 Wins</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+<body>
+<!-- ``start`` -->
 <style type="text/css" media="screen">
 /* Thermometer column and text */
  .thermometer {
@@ -60,14 +63,13 @@
 }
 .rate, .seasons, #credits { font-weight: normal; }
 </style>
-</head>
-<body>
+
 <span class="thermometer">
     <span class="label" id="thermo-text">
         <span id="headline">78 wins until 90.</span><br>
         <span id="wins">12</span> wins, <span id="losses">18</span> losses.<br><br>
         <span class="rate">At this rate, the Rockies will win <span id="rate">65</span> games,</span>
-        <span class="seasons">and it will take <span id="seasons">1.4</span> seasons to win 90.</span><br>
+        <span class="seasons">and it will take <span id="seasons">1.4 seasons</span> to win 90.</span><br>
         <span id="credits">
             <br>&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
             <br>&nbsp;&nbsp;&nbsp;<em>code by <a href="http://twitter.com/digitalfirstjoe">Joe Murphy</a>.</em>
@@ -95,18 +97,22 @@ var thermo = {
     win_rate: function calculate_rate() 
     {
         if ( this.games_played() == 0 ) return 0;
+        if ( this.wins == 0 && this.losses > 0 ) return '∞';
         return this.wins / this.games_played();
     },
     percent_won: function calculate_percent_won() 
     {
+        if ( typeof this.win_rate() == 'string' ) return 'ZERO';
         return Math.round(this.wins_goal * this.win_rate());
     },
     projected_wins: function calculate_projected_wins() 
     {
+        if ( typeof this.win_rate() == 'string' ) return 'ZERO';
         return Math.round(this.win_rate() * this.games_left());
     },
     seasons: function calculate_seasons() 
     {
+        if ( typeof this.win_rate() == 'string' ) return 'FOREVER';
         //return this.win_rate() * x / this.season;
          
     },
@@ -125,8 +131,9 @@ var thermo = {
     }
 };
 thermo.wins = 0;
-thermo.losses = 0;
+thermo.losses = 1;
 thermo.init();
 </script>
+<!-- ``stop`` -->
 </body>
 </html>
