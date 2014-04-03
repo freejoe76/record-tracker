@@ -124,7 +124,8 @@ var thermo = {
     percent_won: function calculate_percent_won() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
-        return Math.round(this.wins_goal * this.win_rate());
+        //return Math.round(this.wins_goal * this.win_rate());
+        return this.wins / this.wins_goal;
     },
     projected_wins: function calculate_projected_wins() 
     {
