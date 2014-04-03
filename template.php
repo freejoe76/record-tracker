@@ -151,8 +151,6 @@ var thermo = {
         }
     }
 };
-thermo.wins = 0;
-thermo.losses = 1;
 thermo.init();
 </script>
 <!-- ``bookmark`` -->
