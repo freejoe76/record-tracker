@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Rockies Win-O-Meter
- * Plugin URI: 
- * Description: Publish a thermometer tracking the Colorado Rockies' wins in the 2014 MLB season.
+ * Plugin URI: https://gist.github.com/freejoe76/ff90b3a0f16f33a44e43 
+ * Descriphtmltion: Publish a thermometer tracking the Colorado Rockies' wins in the 2014 MLB season.
  * Version: 0.1
  * Author: Joe Murphy
  * Author URI: http://joemurph.com/
@@ -67,6 +67,11 @@ class UpdateData
         return file_put_contents($filename, $json);
     }
 }
+$update = new UpdateData();
+$update->get_xml();
+$update->write_xml();
+$data = $update->parse_xml();
+$update->xml_to_json($data['season'], 'season.json');
 
 class sidebar_thermometer extends WP_Widget
 {
