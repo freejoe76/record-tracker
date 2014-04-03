@@ -73,6 +73,7 @@ $update->write_xml();
 $data = $update->parse_xml();
 $update->xml_to_json($data['season'], 'season.json');
 
+if ( class_exists('WP_Widget') ):
 class sidebar_thermometer extends WP_Widget
 {
     public function __construct()
@@ -94,5 +95,26 @@ class sidebar_thermometer extends WP_Widget
                 ';
         }
 }
+endif;
 
+/*
+$json = file_get_contents('season.json');
+$json_object = json_decode($json, true);
+$stats = array();
+foreach ( $json_object['stat'] as $item ):
+    $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
+endforeach;
+array(5) {
+  ["games_won"]=>
+  string(1) "1"
+  ["games_lost"]=>
+  string(1) "2"
+  ["win_streak"]=>
+  string(1) "1"
+  ["runs_for"]=>
+  string(2) "10"
+  ["runs_against"]=>
+  string(2) "19"
+}
+*/
 ?>
