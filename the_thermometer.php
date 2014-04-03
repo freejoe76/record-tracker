@@ -15,18 +15,23 @@ class UpdateData
     var $xml;
     var $url;
     var $test;
+    var $path_prefix;
 
     function __construct()
     {
         $this->url = 'http://xml.sportsdirectinc.com/sport/v2/baseball/MLB/standings/2014/standings_MLB.xml';
         $this->test = true;
+        $this->path_prefix = '';
+        if ( function_exists('plugin_dir_path') ):
+            $this->path_prefix = plugin_dir_path( __FILE__ );
+        endif;
     }
 
     public function get_xml()
     {
         // Get the XML
         if ( $this->test == true ):
-            $this->url = 'updates.xml';
+            $this->url = $this->path_prefix . 'updates.xml';
         endif;
 
         $this->xml = file_get_contents($this->url);
@@ -39,7 +44,7 @@ class UpdateData
             $this->xml = $this->get_xml();
         endif;
         if ( $this->xml != false ):
-            return file_put_contents('updates.xml', $this->xml);
+            return file_put_contents($this->path_prefix . 'updates.xml', $this->xml);
         endif;
         return false;
     }
@@ -64,7 +69,7 @@ class UpdateData
     public function xml_to_json($xml, $filename)
     {
         $json = json_encode($xml);
-        return file_put_contents($filename, $json);
+        return file_put_contents($this->path_prefix . $filename, $json);
     }
 }
 $update = new UpdateData();
@@ -87,12 +92,19 @@ class sidebar_thermometer extends WP_Widget
     public function widget($args, $instance)
     {
         // 
+        $path_prefix = '';
+        if ( function_exists('plugin_dir_path') ):
+            $path_prefix = plugin_dir_path( __FILE__ );
+        endif;
         echo '
             <!-- ##THERMOMETER## -->
-            ' . file_get_contents('template-widget.php') . '
+            ' . file_get_contents($path_prefix . 'template-widget.php') . '
             <!-- ##ENDTHERMOMETER## -->
                 ';
         }
 }
+
+function register_thermometer_widget() { register_widget('sidebar_thermometer'); }
+add_action( 'widgets_init', 'register_thermometer_widget' );
 
 ?>

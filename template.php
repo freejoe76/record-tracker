@@ -64,7 +64,12 @@
 .rate, .seasons, #credits { font-weight: normal; }
 </style>
 <?php
-$json = file_get_contents('season.json');
+$path = '';
+if ( function_exists('plugin_dir_path') ):
+    $path .= plugin_dir_path( __FILE__ );
+endif;
+$path .= 'season.json';
+$json = file_get_contents($path);
 $json_object = json_decode($json, true);
 $stats = array();
 foreach ( $json_object['stat'] as $item ):
@@ -124,7 +129,6 @@ var thermo = {
     percent_won: function calculate_percent_won() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
-        //return Math.round(this.wins_goal * this.win_rate());
         return this.wins / this.wins_goal;
     },
     projected_wins: function calculate_projected_wins() 
