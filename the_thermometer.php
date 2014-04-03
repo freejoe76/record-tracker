@@ -98,9 +98,9 @@ class sidebar_thermometer extends WP_Widget
         endif;
         echo '
             <!-- ##THERMOMETER## -->
-            ' . file_get_contents($path_prefix . 'template-widget.php') . '
-            <!-- ##ENDTHERMOMETER## -->
-                ';
+            ';
+        include($path_prefix . 'template-widget.php');
+        echo '    <!-- ##ENDTHERMOMETER## -->';
         }
 }
 
