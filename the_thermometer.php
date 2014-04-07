@@ -72,11 +72,29 @@ class UpdateData
         return file_put_contents($this->path_prefix . $filename, $json);
     }
 }
-$update = new UpdateData();
-$update->get_xml();
-$update->write_xml();
-$data = $update->parse_xml();
-$update->xml_to_json($data['season'], 'season.json');
+
+function runit()
+{
+    // I know, 'runit' is a bad idea for a function, but
+    // it's required by wp_schedule_update.
+    $update = new UpdateData();
+    $update->get_xml();
+    $update->write_xml();
+    $data = $update->parse_xml();
+    $update->xml_to_json($data['season'], 'season.json');
+}
+
+// We do this to get the Rockies data ingested every hour.
+// On an early action hook, check if the hook is scheduled - if not, schedule it.
+add_action( 'wp', 'prefix_setup_schedule' );
+function prefix_setup_schedule() 
+{
+    if ( ! wp_next_scheduled( 'prefix_hourly_event' ) ):
+        wp_schedule_event(time(), 'hourly', 'prefix_hourly_event');
+    endif;
+}
+add_action( 'prefix_hourly_event', 'runit' );
+
 
 class sidebar_thermometer extends WP_Widget
 {
