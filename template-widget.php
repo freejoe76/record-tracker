@@ -54,6 +54,7 @@
     display:block;
 }
 .thermo_rate, .thermo_seasons, #credits { font-weight: normal; }
+#thermo_quote { display:none; }
 </style>
 <?php
 $path = '';
@@ -84,7 +85,9 @@ array(5) {
 ?>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
-        <span id="headline">78 wins until 90.</span><br>
+        <span id="thermo_quote">"When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
+        </span>
+        <span id="headline">[loading] wins until 96.</span><br>
         <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         <span class="thermo_rate">At this rate, the Rockies will win <span id="rate">65</span> games,</span>
         <span class="thermo_seasons">and it will take <span id="seasons">1.4 seasons</span> to win 90.</span><br>
@@ -99,7 +102,7 @@ var thermo = {
     season: 162,
     wins: <?php echo $stats['games_won']; ?>,
     losses: <?php echo $stats['games_lost']; ?>,
-    wins_goal: 90,
+    wins_goal: 96,
     games_played: function calculate_games_played() 
     {
         return this.wins + this.losses;
@@ -136,15 +139,15 @@ var thermo = {
     },
     init: function init()
     {
-        if ( typeof($) != 'undefined' )
+        if ( typeof(jQuery) != 'undefined' )
         {
-            $('#headline').text(this.games_to_win() + " wins until " + this.wins_goal + ".");
-            $('#wins').text(this.wins);
-            $('#losses').text(this.losses);
-            $('#rate').text(this.projected_wins());
-            //$('#rate').text(this.projected_wins());
+            jQuery('#headline').text(this.games_to_win() + " wins until " + this.wins_goal + ".");
+            jQuery('#wins').text(this.wins);
+            jQuery('#losses').text(this.losses);
+            jQuery('#rate').text(this.projected_wins());
+            //jQuery('#rate').text(this.projected_wins());
             var percent = 100 - this.percent_won();       
-            $('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
+            jQuery('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
         }
     }
 };
