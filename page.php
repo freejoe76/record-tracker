@@ -3,7 +3,7 @@
 Template Name: Thermometer Page
 */
 
-//get_header(); 
+get_header(); 
 include_once('template-widget.php');
 ?>
 sup

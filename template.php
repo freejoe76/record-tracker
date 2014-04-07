@@ -53,7 +53,7 @@
     left:4px;
     background:#db3f02;
 }
- .label {
+ .thermo_label {
     text-indent:0;
     font:bold 14px/20px helvetica, arial, sans-serif;
     width:200px;
@@ -61,7 +61,7 @@
     position: absolute;
     display:block;
 }
-.rate, .seasons, #credits { font-weight: normal; }
+.thermo_rate, .thermo_seasons, #credits { font-weight: normal; }
 </style>
 <?php
 $path = '';
@@ -91,11 +91,11 @@ array(5) {
 */
 ?>
 <span class="thermometer">
-    <span class="label" id="thermo-text">
+    <span class="thermo_label" id="thermo-text">
         <span id="headline">78 wins until 90.</span><br>
         <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
-        <span class="rate">At this rate, the Rockies will win <span id="rate">65</span> games,</span>
-        <span class="seasons">and it will take <span id="seasons">1.4 seasons</span> to win 90.</span><br>
+        <span class="thermo_rate">At this rate, the Rockies will win <span id="rate">65</span> games,</span>
+        <span class="thermo_seasons">and it will take <span id="seasons">1.4 seasons</span> to win 90.</span><br>
         <span id="credits">
             <br>&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
             <br>&nbsp;&nbsp;&nbsp;<em>code by <a href="http://twitter.com/digitalfirstjoe">Joe Murphy</a>.</em>
