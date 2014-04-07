@@ -107,4 +107,14 @@ class sidebar_thermometer extends WP_Widget
 function register_thermometer_widget() { register_widget('sidebar_thermometer'); }
 add_action( 'widgets_init', 'register_thermometer_widget' );
 
+// Code to create the page. Right now the page slug is hard-coded.
+// Note: You've got to create a page with the slug "wins" for this to work.
+add_filter( 'template_include', 'thermometer_page_template', 99 );
+function thermometer_page_template( $template )
+{
+    if ( is_page( 'wins' ) ):
+        $template = dirname( __FILE__ ) . '/page.php';
+    endif;
+    return $template;
+}
 ?>
