@@ -27,6 +27,12 @@ class UpdateData
         endif;
     }
 
+    public function set_test($test)
+    {
+        // Set the value of the test var.
+        return $this->test = $test;
+    }
+
     public function get_xml()
     {
         // Get the XML
@@ -73,11 +79,12 @@ class UpdateData
     }
 }
 
-function runit()
+function runit($test=false)
 {
     // I know, 'runit' is a bad idea for a function, but
     // it's required by wp_schedule_update.
     $update = new UpdateData();
+    $update->set_test($test);
     $update->get_xml();
     $update->write_xml();
     $data = $update->parse_xml();
@@ -100,7 +107,11 @@ endif;
 
 // If we're running this file from the command line, we want to run this script.
 if ( isset($_SERVER['argv'][0]) ):
-    runit();
+    $test = true;
+    if ( isset($_SERVER['argv'][1]) ):
+        $test = false;
+    }
+    runit($test);
 endif;
 
 if ( class_exists('WP_Widget') ):
