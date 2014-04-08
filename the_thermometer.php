@@ -103,6 +103,7 @@ if ( isset($_SERVER['argv'][0]) ):
     runit();
 endif;
 
+if ( class_exists('WP_Widget') ):
 class sidebar_thermometer extends WP_Widget
 {
     public function __construct()
@@ -130,11 +131,14 @@ class sidebar_thermometer extends WP_Widget
 }
 
 function register_thermometer_widget() { register_widget('sidebar_thermometer'); }
-if ( function_exists('add_action') ):
 add_action( 'widgets_init', 'register_thermometer_widget' );
+endif;
+
+
 
 // Code to create the page. Right now the page slug is hard-coded.
 // Note: You've got to create a page with the slug "wins" for this to work.
+if ( function_exists('add_filter') ):
 add_filter( 'template_include', 'thermometer_page_template', 99 );
 function thermometer_page_template( $template )
 {
