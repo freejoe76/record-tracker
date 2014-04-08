@@ -86,6 +86,7 @@ function runit()
 
 // We do this to get the Rockies data ingested every hour.
 // On an early action hook, check if the hook is scheduled - if not, schedule it.
+if ( function_exists('add_action') ):
 add_action( 'wp', 'prefix_setup_schedule' );
 function prefix_setup_schedule() 
 {
@@ -94,7 +95,13 @@ function prefix_setup_schedule()
     endif;
 }
 add_action( 'prefix_hourly_event', 'runit' );
+endif;
 
+
+// If we're running this file from the command line, we want to run this script.
+if ( isset($_SERVER['argv'][0]) ):
+    runit();
+endif;
 
 class sidebar_thermometer extends WP_Widget
 {
@@ -123,6 +130,7 @@ class sidebar_thermometer extends WP_Widget
 }
 
 function register_thermometer_widget() { register_widget('sidebar_thermometer'); }
+if ( function_exists('add_action') ):
 add_action( 'widgets_init', 'register_thermometer_widget' );
 
 // Code to create the page. Right now the page slug is hard-coded.
@@ -135,4 +143,5 @@ function thermometer_page_template( $template )
     endif;
     return $template;
 }
+endif;
 ?>
