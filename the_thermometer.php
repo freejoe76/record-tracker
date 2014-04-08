@@ -107,11 +107,15 @@ endif;
 
 // If we're running this file from the command line, we want to run this script.
 if ( isset($_SERVER['argv'][0]) ):
-    $test = true;
     if ( isset($_SERVER['argv'][1]) ):
-        $test = false;
-    }
-    runit($test);
+        // Not testing, will d/l file from Sports Direct
+        // To run it this way:
+        // $ php the_thermometer.php whatever-just-put-something-here
+        runit(false);
+    else:
+        // Testing
+        runit(true);
+    endif;
 endif;
 
 if ( class_exists('WP_Widget') ):
