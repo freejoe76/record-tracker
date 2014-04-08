@@ -16,12 +16,7 @@ include(get_template_directory() . '/header.php');
 		    </div>
 	       </div>
      
-    	       <?php endwhile; else: ?>
-	       <div class="noresults">
-		    <h1>Not Found: 404 Error</h1>
-		    Oops, it appears that page doesn't exist. Well, we're not all perfect, but we try. Can you try this again or maybe visit our <a 
-title="Our Site" href="http://blogs.denverpost.com">Home Page</a> to start fresh. We'll do better next time.
-	       </div>
+    	       <?php endwhile; ?>
 	       <?php endif; ?>
      </div><!-- Closes the content div-->
      
