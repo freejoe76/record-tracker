@@ -91,6 +91,11 @@ function runit($test=false)
     $update->xml_to_json($data['season'], 'season.json');
 }
 
+// *******************
+//
+// CRONTAB
+//
+// *******************
 // We do this to get the Rockies data ingested every hour.
 // On an early action hook, check if the hook is scheduled - if not, schedule it.
 if ( function_exists('add_action') ):
@@ -105,6 +110,11 @@ add_action( 'prefix_hourly_event', 'runit' );
 endif;
 
 
+// *******************
+//
+// COMMAND-LINE USE
+//
+// *******************
 // If we're running this file from the command line, we want to run this script.
 if ( isset($_SERVER['argv'][0]) ):
     if ( isset($_SERVER['argv'][1]) ):
@@ -113,11 +123,17 @@ if ( isset($_SERVER['argv'][0]) ):
         // $ php the_thermometer.php whatever-just-put-something-here
         runit(false);
     else:
-        // Testing
+        // Testing, will use local files.
         runit(true);
     endif;
 endif;
 
+
+// *******************
+//
+// WIDGET
+//
+// *******************
 if ( class_exists('WP_Widget') ):
 class sidebar_thermometer extends WP_Widget
 {
@@ -151,6 +167,11 @@ endif;
 
 
 
+// *******************
+//
+// PAGE
+//
+// *******************
 // Code to create the page. Right now the page slug is hard-coded.
 // Note: You've got to create a page with the slug "wins" for this to work.
 if ( function_exists('add_filter') ):
