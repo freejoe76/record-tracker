@@ -178,8 +178,10 @@ if ( function_exists('add_filter') ):
 add_filter( 'template_include', 'thermometer_page_template', 99 );
 function thermometer_page_template( $template )
 {
-    if ( is_page( 'wins' ) ):
+    if ( is_page( 'recordtracker' ) ):
         $template = dirname( __FILE__ ) . '/page.php';
+    elseif ( is_page( 'recordtracker-include' ) ):
+        $template = dirname( __FILE__ ) . '/page-iframe.php';
     endif;
     return $template;
 }
