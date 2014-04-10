@@ -4,6 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>90 Wins</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/$/1/$.min.js"></script>
+<style type="text/css" media="screen">
+/* Full-page specific styles */
+ .thermometer {
+    margin:50% 0 0 50%;
+    left:-15px;
+    top:-500px;
+}
+</style>
 </head>
 <body>
 <!-- ``bookmark`` -->
@@ -13,9 +21,6 @@
 
 /* Thermometer column and text. Source: http://jsfiddle.net/gBW3Y/252/ */
  .thermometer {
-    margin:50% 0 0 50%;
-    left:-15px;
-    top:-500px;
     width:22px;
     height:150px;
     display:block;
