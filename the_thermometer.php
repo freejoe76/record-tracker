@@ -65,27 +65,19 @@ class UpdateData
         endif;
         $object = simplexml_load_string($this->xml);
 
-        $divisions = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0]->{'division-content'};
-        // This is great. The division information is a child of division-content,
-        // just the same as the team information. We know the team information
-        // is the next element after the division information, so these are the
-        // hoops we jump through to get that.
-        $next_element == 0;
+        $divisions = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0];
+
+        // Loops, loops.
+        // This is, I swear, the most elegant way of getting the Rockies' element.
         foreach ( $divisions->children() as $division):
-            if ( $next_element == 1 ):
-                var_dump($division);
-                $next_element = 0;
-            endif;
-            if ( $division->name == 'National League West' ):
-                $next_element = 1;
+            if ( $division->division->name == 'National League West' ):
+                foreach ( $division->children() as $teams ):
+                    if ( $teams->team->name == 'Colorado' ):
+                        $team = $teams;
+                    endif;
+                endforeach;
             endif;
         endforeach;
-        $division = $divisions->xpath('division[@name="National League West"]');
-        $division = $divisions->xpath('division');
-        //var_dump($division);
-        //$team = $teams->
-        //var_dump($teams);
-        //var_dump($team);
         $regular_season = $team->{'stat-group'}[1];
         $last_ten = $team->{'stat-group'}[3];
         $data = array('season' => $regular_season, 'last_ten' => $last_ten);
