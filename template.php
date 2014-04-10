@@ -168,7 +168,7 @@ var thermo = {
             jQuery('#losses').text(this.losses);
             jQuery('#rate').text(this.projected_wins());
             jQuery('#seasons').text(this.projected_seasons() + " seasons");
-            var percent = 100 - this.percent_won();       
+            var percent = 100 - (this.percent_won() * 100);    
             jQuery('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
         }
     }
