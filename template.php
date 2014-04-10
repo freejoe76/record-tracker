@@ -18,7 +18,6 @@
     display:block;
     font:bold 14px/152px helvetica, arial, sans-serif;
     text-indent: 36px;
-    background: -webkit-linear-gradient(top, #fff 0%, #fff 100%, #db3f02 100%, #db3f02 100%);
     border-radius:22px 22px 0 0;
     border:5px solid #4a1c03;
     border-bottom:none;
@@ -83,6 +82,7 @@ $stats['games_left'] = $stats['season'] - $stats['games_played'];
 $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
 $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
+$stats['percent'] = 100 - $stats['percent_won'];
 $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']);
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
 /*
@@ -100,6 +100,11 @@ array(5) {
 }
 */
 ?>
+<style type="text/css">
+ .thermometer {
+    background: -webkit-linear-gradient(top, #fff 0%, #fff <?php echo $stats['percent']; ?>%, #db3f02 <?php echo $stats['percent']; ?>%, #db3f02 100%);
+}
+</style>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
         <span id="thermo_quote">"When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
