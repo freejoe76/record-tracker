@@ -84,6 +84,7 @@ $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
 $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
 $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']);
+$stats['projected_seasons'] = ( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'];
 /*
 array(5) {
   ["games_won"]=>
@@ -150,7 +151,7 @@ var thermo = {
     seasons: function calculate_seasons() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'FOREVER';
-        //return this.win_rate() * x / this.season;
+        return ( this.wins_goal * ( 1 / this.win_rate() ) ) / this.season;
          
     },
     init: function init()
