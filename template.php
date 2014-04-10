@@ -107,7 +107,7 @@ array(5) {
         <span id="headline"><?php echo $stats['games_to_win']; ?> wins until <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['projected_wins']; ?></span> games,</span>
-        <span class="thermo_seasons">and it will take <span id="seasons">1.4 seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
+        <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="credits">
             <br>&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
             <br>&nbsp;&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
@@ -148,7 +148,7 @@ var thermo = {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
         return Math.round(this.win_rate() * this.games_left());
     },
-    seasons: function calculate_seasons() 
+    projected_seasons: function calculate_seasons() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'FOREVER';
         return ( this.wins_goal * ( 1 / this.win_rate() ) ) / this.season;
@@ -162,7 +162,7 @@ var thermo = {
             jQuery('#wins').text(this.wins);
             jQuery('#losses').text(this.losses);
             jQuery('#rate').text(this.projected_wins());
-            //jQuery('#rate').text(this.projected_wins());
+            jQuery('#seasons').text(this.projected_seasons() + " seasons");
             var percent = 100 - this.percent_won();       
             jQuery('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
         }
