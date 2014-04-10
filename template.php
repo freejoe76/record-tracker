@@ -117,8 +117,8 @@ array(5) {
     <span class="thermo_label" id="thermo-text">
         <span id="thermo_quote">"When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
         </span>
-        <span id="headline"><?php echo $stats['games_to_win']; ?> wins until <?php echo $stats['wins_goal']; ?>.</span><br>
-        <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
+        <span id="headline">The Rockies have <?php echo $stats['games_to_win']; ?> wins to go until they reach <?php echo $stats['wins_goal']; ?> wins.</span><br>
+        <span id="wins">Record: <?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['projected_wins']; ?></span> games,</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="credits">
