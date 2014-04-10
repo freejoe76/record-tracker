@@ -72,7 +72,9 @@ endif;
 $path .= 'season.json';
 $json = file_get_contents($path);
 $json_object = json_decode($json, true);
-$stats = array();
+$stats = array(
+    'season' => 162,
+    'wins_goal' => 96);
 foreach ( $json_object['stat'] as $item ):
     $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
 endforeach;
@@ -95,22 +97,22 @@ array(5) {
     <span class="thermo_label" id="thermo-text">
         <span id="thermo_quote">"When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
         </span>
-        <span id="headline">[loading] wins until 96.</span><br>
+        <span id="headline"><?php echo $stats['wins_goal'] - $stats['games_won']; ?> wins until <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         <span class="thermo_rate">At this rate, the Rockies will win <span id="rate">65</span> games,</span>
         <span class="thermo_seasons">and it will take <span id="seasons">1.4 seasons</span> to win 90.</span><br>
         <span id="credits">
             <br>&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
-            <br>&nbsp;&nbsp;&nbsp;<em>code by <a href="http://twitter.com/digitalfirstjoe">Joe Murphy</a>.</em>
+            <br>&nbsp;&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
         </span>
     </span>
 </span>
 <script type="text/javascript">
 var thermo = {
-    season: 162,
+    season: <?php echo $stats['season']; ?>,
     wins: <?php echo $stats['games_won']; ?>,
     losses: <?php echo $stats['games_lost']; ?>,
-    wins_goal: 96,
+    wins_goal: <?php echo $stats['wins_goal']; ?>,
     games_played: function calculate_games_played() 
     {
         return this.wins + this.losses;
