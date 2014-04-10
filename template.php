@@ -8,6 +8,9 @@
 <body>
 <!-- ``bookmark`` -->
 <style type="text/css" media="screen">
+/* Blogs template override */
+ body#wrapper { background: transparent; }
+
 /* Thermometer column and text */
  .thermometer {
     margin:50% 0 0 50%;
