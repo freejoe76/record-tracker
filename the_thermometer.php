@@ -100,7 +100,7 @@ function runit($test=false)
     $update->get_xml();
     $update->write_xml();
     $data = $update->parse_xml();
-    $update->xml_to_json($data['season'], 'season.json');
+    $update->xml_to_json($data['season'], $this->path_prefix . 'season.json');
 }
 
 // *******************
