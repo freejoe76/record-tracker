@@ -125,8 +125,8 @@ array(5) {
         <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['projected_wins']; ?></span> games,</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="credits">
-            <br>&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
-            <br>&nbsp;&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
+            <br>&nbsp;&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
+            <br>&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
         </span>
     </span>
 </span>
