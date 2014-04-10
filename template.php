@@ -11,7 +11,7 @@
 /* Blogs template override */
  body#wrapper { background: transparent; }
 
-/* Thermometer column and text */
+/* Thermometer column and text. Source: http://jsfiddle.net/gBW3Y/252/ */
  .thermometer {
     margin:50% 0 0 50%;
     left:-15px;
