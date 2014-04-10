@@ -81,7 +81,9 @@ endforeach;
 $stats['games_played'] = $stats['games_won'] + $stats['games_lost'];
 $stats['games_left'] = $stats['season'] - $stats['games_played'];
 $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
-$stats['win_rate'] = round($stats['games_won'] / $stats['games_played']);
+$stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
+$stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
+$stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']);
 /*
 array(5) {
   ["games_won"]=>
@@ -103,8 +105,8 @@ array(5) {
         </span>
         <span id="headline"><?php echo $stats['games_to_win']; ?> wins until <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
-        <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['win_rate']; ?></span> games,</span>
-        <span class="thermo_seasons">and it will take <span id="seasons">1.4 seasons</span> to win 90.</span><br>
+        <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['projected_wins']; ?></span> games,</span>
+        <span class="thermo_seasons">and it will take <span id="seasons">1.4 seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="credits">
             <br>&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
             <br>&nbsp;&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
