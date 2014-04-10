@@ -78,6 +78,10 @@ $stats = array(
 foreach ( $json_object['stat'] as $item ):
     $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
 endforeach;
+$stats['games_played'] = $stats['games_won'] + $stats['games_lost'];
+$stats['games_left'] = $stats['season'] - $stats['games_played'];
+$stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
+$stats['win_rate'] = round($stats['games_won'] / $stats['games_played']);
 /*
 array(5) {
   ["games_won"]=>
@@ -97,9 +101,9 @@ array(5) {
     <span class="thermo_label" id="thermo-text">
         <span id="thermo_quote">"When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
         </span>
-        <span id="headline"><?php echo $stats['wins_goal'] - $stats['games_won']; ?> wins until <?php echo $stats['wins_goal']; ?>.</span><br>
+        <span id="headline"><?php echo $stats['games_to_win']; ?> wins until <?php echo $stats['wins_goal']; ?>.</span><br>
         <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
-        <span class="thermo_rate">At this rate, the Rockies will win <span id="rate">65</span> games,</span>
+        <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['win_rate']; ?></span> games,</span>
         <span class="thermo_seasons">and it will take <span id="seasons">1.4 seasons</span> to win 90.</span><br>
         <span id="credits">
             <br>&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
