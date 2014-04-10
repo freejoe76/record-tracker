@@ -82,7 +82,7 @@ $stats['games_left'] = $stats['season'] - $stats['games_played'];
 $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
 $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
-$stats['percent'] = 100 - $stats['percent_won'];
+$stats['percent'] = 100 - ($stats['percent_won'] * 100);
 $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']);
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
 /*
