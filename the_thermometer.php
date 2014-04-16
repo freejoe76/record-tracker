@@ -65,15 +65,21 @@ class UpdateData
         endif;
         $object = simplexml_load_string($this->xml);
 
-        $divisions = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0];
+        $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0];
+        $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0];
+        //var_dump($conferences);
 
         // Loops, loops.
         // This is, I swear, the most elegant way of getting the Rockies' element.
-        foreach ( $divisions->children() as $division):
-            if ( $division->division->name == 'National League West' ):
-                foreach ( $division->children() as $teams ):
-                    if ( $teams->team->name == 'Colorado' ):
-                        $team = $teams;
+        foreach ( $conferences->children() as $conference):
+            if ( $conference->conference->name == 'National League' ):
+                foreach ( $conference->children() as $division):
+                    if ( $division->division->name == 'National League West' ):
+                        foreach ( $division->children() as $teams ):
+                            if ( $teams->team->name == 'Colorado' ):
+                                $team = $teams;
+                            endif;
+                        endforeach;
                     endif;
                 endforeach;
             endif;
@@ -132,10 +138,11 @@ if ( isset($_SERVER['argv'][0]) ):
     if ( isset($_SERVER['argv'][1]) ):
         // Not testing, will d/l file from Sports Direct
         // To run it this way:
-        // $ php the_thermometer.php whatever-just-put-something-here
+        // $ php the_thermometer.php notest
         runit(false);
     else:
         // Testing, will use local files.
+        // $ php the_thermometer.php
         runit(true);
     endif;
 endif;
