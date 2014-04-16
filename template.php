@@ -17,7 +17,7 @@
 <!-- ``bookmark`` -->
 <style type="text/css" media="screen">
 /* Blogs template override */
- body#wrapper { background: transparent; }
+#wrapper { background-color: transparent; }
 
 /* Thermometer column and text. Source: http://jsfiddle.net/gBW3Y/252/ */
  .thermometer {
