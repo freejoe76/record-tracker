@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>90 Wins</title>
+<title>96 Wins</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/$/1/$.min.js"></script>
 <style type="text/css" media="screen">
 /* Full-page specific styles */
@@ -167,7 +167,7 @@ var thermo = {
     projected_seasons: function calculate_seasons() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'FOREVER';
-        return ( this.wins_goal * ( 1 / this.win_rate() ) ) / this.season;
+        return Math.round((( this.wins_goal * ( 1 / this.win_rate() ) ) / this.season) * 10) / 10;
          
     },
     init: function init()
