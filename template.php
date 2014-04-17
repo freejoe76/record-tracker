@@ -63,13 +63,21 @@
  .thermo_label {
     text-indent:0;
     font:bold 14px/20px helvetica, arial, sans-serif;
-    width:200px;
+    width:250px;
     left:30px;
-    position: absolute;
+    position:absolute;
     display:block;
 }
 #record, .thermo_rate, .thermo_seasons, #credits { font-weight: normal; }
 #thermo_quote { display:none; }
+.widget_item .categorytopper { display:none;}
+
+/* Sidebar-specific display styles */
+#sidebar2 #thermo_quote { display:block; }
+#sidebar2 .widget_item .categorytopper { display:none;}
+#sidebar2 .widget_item { 
+    height:200px;
+}
 </style>
 <?php
 $path = '';
@@ -113,10 +121,13 @@ array(5) {
     background: -webkit-linear-gradient(top, #fff 0%, #fff <?php echo $stats['percent']; ?>%, #db3f02 <?php echo $stats['percent']; ?>%, #db3f02 100%);
 }
 </style>
+<div class="widget_item">
+    <div class="categorytopper">Rockies Record Tracker</div>
+    <span id="thermo_quote">
+        "When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
+    </span>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
-        <span id="thermo_quote">"When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
-        </span>
         <span id="headline">The Rockies have <?php echo $stats['games_to_win']; ?> wins to go until they reach <?php echo $stats['wins_goal']; ?> wins.</span><br>
         <span id="record">
         Record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
@@ -130,6 +141,7 @@ array(5) {
         </span>
     </span>
 </span>
+</div>
 <script type="text/javascript">
 var thermo = {
     season: <?php echo $stats['season']; ?>,
