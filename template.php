@@ -69,8 +69,9 @@
     display:block;
 }
  p#credits {
-    padding-top:180px;
-    font-size:12px;
+    padding-top:210px;
+    line-height:1.2em;
+    font-size:13px;
 }
 #record, .thermo_rate, .thermo_seasons, #credits { font-weight: normal; }
 #thermo_quote { display:none; }
@@ -80,7 +81,7 @@
 #sidebar2 #thermo_quote { display:block; }
 #sidebar2 .widget_item .categorytopper { display:block;}
 #sidebar2 .widget_item { 
-    height:350px;
+    height:370px;
 }
 </style>
 <?php
