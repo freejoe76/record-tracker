@@ -81,7 +81,7 @@
 #sidebar2 #thermo_quote { display:block; }
 #sidebar2 .widget_item .categorytopper { display:block;}
 #sidebar2 .widget_item { 
-    height:370px;
+    height:400px;
 }
 </style>
 <?php
