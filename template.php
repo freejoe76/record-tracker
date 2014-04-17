@@ -68,6 +68,10 @@
     position:absolute;
     display:block;
 }
+ p#credits {
+    padding-top:180px;
+    font-size:12px;
+}
 #record, .thermo_rate, .thermo_seasons, #credits { font-weight: normal; }
 #thermo_quote { display:none; }
 .widget_item .categorytopper { display:none;}
@@ -138,8 +142,8 @@ array(5) {
     </span>
 </span>
         <p id="credits">
-            <br>&nbsp;&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
-            <br>&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
+            <a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
+            <br><em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
         </p>
 </div>
 <script type="text/javascript">
