@@ -74,9 +74,9 @@
 
 /* Sidebar-specific display styles */
 #sidebar2 #thermo_quote { display:block; }
-#sidebar2 .widget_item .categorytopper { display:none;}
+#sidebar2 .widget_item .categorytopper { display:block;}
 #sidebar2 .widget_item { 
-    height:200px;
+    height:350px;
 }
 </style>
 <?php
@@ -123,24 +123,24 @@ array(5) {
 </style>
 <div class="widget_item">
     <div class="categorytopper">Rockies Record Tracker</div>
-    <span id="thermo_quote">
+    <p id="thermo_quote">
         "When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
-    </span>
+    </p>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
-        <span id="headline">The Rockies have <?php echo $stats['games_to_win']; ?> wins to go until they reach <?php echo $stats['wins_goal']; ?> wins.</span><br>
+        <span id="headline"><?php echo $stats['games_to_win']; ?> wins to go until the Rockies hit Monfort's <?php echo $stats['wins_goal']; ?> wins.</span><br>
         <span id="record">
         Record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
 
         <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['projected_wins']; ?></span> games,</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
-        <span id="credits">
-            <br>&nbsp;&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
-            <br>&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
-        </span>
     </span>
 </span>
+        <p id="credits">
+            <br>&nbsp;&nbsp;&nbsp;<a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
+            <br>&nbsp;&nbsp;<em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
+        </p>
 </div>
 <script type="text/javascript">
 var thermo = {
@@ -186,7 +186,7 @@ var thermo = {
     {
         if ( typeof(jQuery) != 'undefined' )
         {
-            jQuery('#headline').text(this.games_to_win() + " wins until " + this.wins_goal + ".");
+            jQuery('#headline').text(this.games_to_win() + " wins to go until the Rockies hit Monfort's " + this.wins_goal + " wins.");
             jQuery('#wins').text(this.wins);
             jQuery('#losses').text(this.losses);
             jQuery('#rate').text(this.projected_wins());
