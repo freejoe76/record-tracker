@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Rockies Win-O-Meter
+ * Plugin Name: Rockies Record Tracker
  * Plugin URI: https://gist.github.com/freejoe76/ff90b3a0f16f33a44e43 
- * Descriphtmltion: Publish a thermometer tracking the Colorado Rockies' wins in the 2014 MLB season.
+ * Descriphtmltion: Publish a thermometer tracking the Colorado Rockies' record in the 2014 MLB season.
  * Version: 0.1
  * Author: Joe Murphy
  * Author URI: http://joemurph.com/

@@ -63,13 +63,14 @@
  .thermo_label {
     text-indent:0;
     font:bold 14px/20px helvetica, arial, sans-serif;
-    width:250px;
-    left:30px;
+    width:230px;
+    left:50px;
     position:absolute;
     display:block;
 }
  p#credits {
-    padding-top:210px;
+    padding-top:150px;
+    padding-left:55px;
     line-height:1.2em;
     font-size:13px;
 }
@@ -81,7 +82,7 @@
 #sidebar2 #thermo_quote { display:block; }
 #sidebar2 .widget_item .categorytopper { display:block;}
 #sidebar2 .widget_item { 
-    height:400px;
+    height:380px;
 }
 </style>
 <?php
