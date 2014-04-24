@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>96 Wins</title>
+<title>Record Tracker</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/$/1/$.min.js"></script>
 <style type="text/css" media="screen">
 /* Full-page specific styles */
@@ -105,7 +105,7 @@ $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
 $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
 $stats['percent'] = 100 - ($stats['percent_won'] * 100);
-$stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']);
+$stats['projected_wins'] = round($stats['win_rate'] * $stats['season']);
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
 /*
 array(5) {
@@ -180,7 +180,7 @@ var thermo = {
     projected_wins: function calculate_projected_wins() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
-        return Math.round(this.win_rate() * this.games_left());
+        return Math.round(this.win_rate() * this.season);
     },
     projected_seasons: function calculate_seasons() 
     {
