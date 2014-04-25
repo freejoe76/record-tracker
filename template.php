@@ -95,7 +95,7 @@ $json = file_get_contents($path);
 $json_object = json_decode($json, true);
 $stats = array(
     'season' => 162,
-    'wins_goal' => 96);
+    'wins_goal' => 90);
 foreach ( $json_object['stat'] as $item ):
     $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
 endforeach;
