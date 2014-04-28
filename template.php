@@ -18,6 +18,7 @@
 <style type="text/css" media="screen">
 /* Blogs template override */
 #wrapper { background-color: transparent; }
+body { padding-left:4px; }
 
 /* Thermometer column and text. Source: http://jsfiddle.net/gBW3Y/252/ */
  .thermometer {
@@ -128,7 +129,7 @@ array(5) {
 }
 </style>
 <div class="widget_item">
-    <div class="categorytopper">Rockies Record Tracker</div>
+    <div class="categorytopper"><a href="/rockies/recordtracker/">Rockies Record Tracker</a></div>
     <p id="thermo_quote">
         "When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
     </p>
@@ -144,8 +145,8 @@ array(5) {
     </span>
 </span>
         <p id="credits">
-            <a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort"><em>Inspired by Dick Monfort</em></a>,
-            <br><em>code by <a href="http://twitter.com/joemurph">Joe Murphy</a>.</em>
+            <em><a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort" target="_parent">Inspired by Dick Monfort</a></em>,
+            <br><em>code by <a href="http://twitter.com/joemurph" target="_parent">Joe Murphy</a>.</em>
         </p>
 </div>
 <script type="text/javascript">
