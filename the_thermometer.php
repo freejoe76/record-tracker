@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Rockies Record Tracker
- * Plugin URI: https://github.com/freejoe76/record-tracker
- * Description: Publish a thermometer tracking the Colorado Rockies' record in the 2014 MLB season.
- * Version: 0.2
+ * Plugin URI: https://gist.github.com/freejoe76/ff90b3a0f16f33a44e43 
+ * Descriphtmltion: Publish a thermometer tracking the Colorado Rockies' record in the 2014 MLB season.
+ * Version: 0.1
  * Author: Joe Murphy
  * Author URI: http://joemurph.com/
  * License: Apache-2
@@ -65,7 +65,9 @@ class UpdateData
         endif;
         $object = simplexml_load_string($this->xml);
 
+        $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0];
         $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0];
+        //var_dump($conferences);
 
         // Loops, loops.
         // This is, I swear, the most elegant way of getting the Rockies' element.
@@ -158,7 +160,7 @@ class sidebar_thermometer extends WP_Widget
     {
             parent::__construct(
                 'sidebar_thermometer',
-                __('Rockies Record Tracker', 'sidebar_thermometer'),
+                __('Rockies Win-O-Meter', 'sidebar_thermometer'),
                 array('description' => __('Publish a thermometer that tracks how close the Rockies are to 90 wins.', 'sidebar_thermometer'), )
             );
     }
