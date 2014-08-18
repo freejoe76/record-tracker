@@ -85,6 +85,9 @@ body { padding-left:4px; }
 #sidebar2 .widget_item { 
     height:380px;
 }
+
+/* Loss-Mode Styles */
+#thermo_seasons, #thermo_quote { display:none!important; }
 </style>
 <?php
 $path = '';
@@ -96,7 +99,8 @@ $json = file_get_contents($path);
 $json_object = json_decode($json, true);
 $stats = array(
     'season' => 162,
-    'wins_goal' => 96);
+    'wins_goal' => 96,
+    'goal' => 100);
 foreach ( $json_object['stat'] as $item ):
     $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
 endforeach;
@@ -104,10 +108,16 @@ $stats['games_played'] = $stats['games_won'] + $stats['games_lost'];
 $stats['games_left'] = $stats['season'] - $stats['games_played'];
 $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
 $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
+$stats['loss_rate'] = 1 - $stats['win_rate'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
 $stats['percent'] = 100 - ($stats['percent_won'] * 100);
 $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']);
+$stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']);
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
+$config = (
+    'goal' => 'lose',
+    'goalplural' => 'losses',
+);
 /*
 array(5) {
   ["games_won"]=>
@@ -135,12 +145,12 @@ array(5) {
     </p>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
-        <span id="headline"><?php echo $stats['games_to_win']; ?> wins to go until the Rockies hit Monfort's <?php echo $stats['wins_goal']; ?> wins.</span><br>
+        <span id="headline"><?php echo $stats['games_to_win']; ?> <?php echo $config['goalplural']; ?> to go until the Rockies hit <?php echo $stats['goal']; ?> <?php echo $config['goalplural']; ?>.</span><br>
         <span id="record">
         Record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
 
-        <span class="thermo_rate">At this rate, the Rockies will win <span id="rate"><?php echo $stats['projected_wins']; ?></span> games,</span>
+        <span class="thermo_rate">At this rate, the Rockies will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected_wins']; ?></span> games.</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
     </span>
 </span>
@@ -151,10 +161,15 @@ array(5) {
 </div>
 <script type="text/javascript">
 var thermo = {
+    config: {
+        'goal': 'lose',
+        'goalplural': 'losses'
+    },
     season: <?php echo $stats['season']; ?>,
     wins: <?php echo $stats['games_won']; ?>,
     losses: <?php echo $stats['games_lost']; ?>,
     wins_goal: <?php echo $stats['wins_goal']; ?>,
+    goal: <?php echo $stats['goal']; ?>,
     games_played: function calculate_games_played() 
     {
         return this.wins + this.losses;
@@ -173,6 +188,10 @@ var thermo = {
         if ( this.wins == 0 && this.losses > 0 ) return '∞';
         return this.wins / this.games_played();
     },
+    loss_rate: function () 
+    {
+        return 1 - this.win_rate();
+    }
     percent_won: function calculate_percent_won() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
@@ -182,6 +201,11 @@ var thermo = {
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
         return Math.round(this.win_rate() * this.games_left());
+    },
+    projected_losses: function () 
+    {
+        if ( typeof this.loss_rate() == 'string' ) return 'ZERO';
+        return Math.round(this.loss_rate() * this.games_left());
     },
     projected_seasons: function calculate_seasons() 
     {
@@ -193,10 +217,17 @@ var thermo = {
     {
         if ( typeof(jQuery) != 'undefined' )
         {
-            jQuery('#headline').text(this.games_to_win() + " wins to go until the Rockies hit Monfort's " + this.wins_goal + " wins.");
+            jQuery('#headline').text(this.games_to_win() + " " + this.config.goalplural + " to go until the Rockies hit " + this.goal + " " + this.config.goalplural + .");
             jQuery('#wins').text(this.wins);
             jQuery('#losses').text(this.losses);
-            jQuery('#rate').text(this.projected_wins());
+            if ( this.config.goal == 'lose' )
+            {
+                jQuery('#rate').text(this.projected_losses());
+            }
+            else
+            {
+                jQuery('#rate').text(this.projected_wins());
+            }
             jQuery('#seasons').text(this.projected_seasons() + " seasons");
             var percent = 100 - (this.percent_won() * 100);    
             jQuery('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
