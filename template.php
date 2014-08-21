@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>96 Wins</title>
+<title>Record Tracker</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css" media="screen">
 /* Full-page specific styles */
@@ -15,6 +15,19 @@
 </head>
 <body>
 <!-- ``bookmark`` -->
+<?php
+// POSSIBLE VALUES: win / lose
+$config = array(
+    'goal' => 'lose',
+    'goalplural' => 'losses',
+    'teamname' => 'Rockies',
+    'quote' => '',
+    'quoted' => '',
+    'credits' => '
+            <em><a href="http://blogs.denverpost.com/rockies/recordtracker-dick_monfort/" target="_parent">Inspired by Dick Monfort</a></em>,
+            <br><em>code by <a href="http://twitter.com/joemurph" target="_parent">Joe Murphy</a>.</em>',
+);
+?>
 <style type="text/css" media="screen">
 /* Blogs template override */
 #wrapper { background-color: transparent; }
@@ -118,10 +131,6 @@ $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']) + $s
 $stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']) + $stats['games_lost'];
 $stats['projected'] = $stats['projected_wins'];
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
-$config = array(
-    'goal' => 'lose',
-    'goalplural' => 'losses',
-);
 if ( $config['goal'] == 'lose' )
 {
     $stats['games_to_goal'] = $stats['games_to_lose'];
@@ -153,29 +162,28 @@ array(5) {
 <div class="widget_item">
     <div class="categorytopper"><a href="/rockies/recordtracker/">Rockies Record Tracker</a></div>
     <p id="thermo_quote">
-        "[QUOTE]" <span>&mdash; [QUOTED]</span>
+        <span id="the_quote"><?php echo $config['quote']; ?></span> <span>&mdash; <span id="the_quoted"><?php echo $config['quoted']; ?></span></span>
     </p>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
-        <span id="headline"><?php echo $stats['games_to_goal']; ?> <?php echo $config['goalplural']; ?> until the Rockies hit <?php echo $stats['goal']; ?> <?php echo $config['goalplural']; ?>.</span><br>
+        <span id="headline"><?php echo $stats['games_to_goal']; ?> <?php echo $config['goalplural']; ?> until the <?php echo $config['teamname']; ?> hit <?php echo $stats['goal']; ?> <?php echo $config['goalplural']; ?>.</span><br>
         <span id="record">
         Record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
 
-        <span class="thermo_rate">At this rate, the Rockies will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games. <?php echo $stats['games_left']; ?> games remain.</span>
+        <span class="thermo_rate">At this rate, the <?php echo $config['teamname']; ?> will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games. <?php echo $stats['games_left']; ?> games remain.</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
     </span>
 </span>
         <p id="credits">
-            <em><a href="http://blogs.denverpost.com/rockies/recordtracker-dick_monfort/" target="_parent">Inspired by Dick Monfort</a></em>,
-            <br><em>code by <a href="http://twitter.com/joemurph" target="_parent">Joe Murphy</a>.</em>
+<?php echo $config['credits']; ?>
         </p>
 </div>
 <script type="text/javascript">
 var thermo = {
     config: {
-        'goal': 'lose',
-        'goalplural': 'losses'
+        goal: '<?php echo $config['goal']; ?>',
+        goalplural: '<?php echo $config['goalplural']; ?>'
     },
     season: <?php echo $stats['season']; ?>,
     wins: <?php echo $stats['games_won']; ?>,
