@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>96 Wins</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/$/1/$.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style type="text/css" media="screen">
 /* Full-page specific styles */
  .thermometer {
@@ -112,6 +112,7 @@ $stats['games_to_goal'] = $stats['games_to_win'];
 $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
 $stats['loss_rate'] = 1 - $stats['win_rate'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
+$stats['percent_lost'] = $stats['games_lost'] / $stats['goal'];
 $stats['percent'] = 100 - ($stats['percent_won'] * 100);
 $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']) + $stats['games_won'];
 $stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']) + $stats['games_lost'];
@@ -124,6 +125,7 @@ $config = [
 if ( $config['goal'] == 'lose' )
 {
     $stats['games_to_goal'] = $stats['games_to_lose'];
+    $stats['percent'] = 100 - ($stats['percent_lost'] * 100);
     $stats['projected'] = $stats['projected_losses'];
     $stats['projected_seasons'] = round(( $stats['goal'] * ( 1 / $stats['loss_rate'] ) ) / $stats['season'], 2);
 }
@@ -201,7 +203,7 @@ var thermo = {
     loss_rate: function () 
     {
         return 1 - this.win_rate();
-    }
+    },
     percent_won: function calculate_percent_won() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
@@ -227,7 +229,7 @@ var thermo = {
     {
         if ( typeof(jQuery) != 'undefined' )
         {
-            jQuery('#headline').text(this.games_to_win() + " " + this.config.goalplural + " to go until the Rockies hit " + this.goal + " " + this.config.goalplural + .");
+            jQuery('#headline').text(this.games_to_win() + " " + this.config.goalplural + " to go until the Rockies hit " + this.goal + " " + this.config.goalplural + ".");
             jQuery('#wins').text(this.wins);
             jQuery('#losses').text(this.losses);
             if ( this.config.goal == 'lose' )
