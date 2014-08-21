@@ -153,7 +153,7 @@ array(5) {
 <div class="widget_item">
     <div class="categorytopper"><a href="/rockies/recordtracker/">Rockies Record Tracker</a></div>
     <p id="thermo_quote">
-        "When Tulo and CarGo both play in the same game, I think we win 60 percent of the time. So you take 60 percent times 160 games and that's 96 wins." <span>&mdash; Rockies owner Dick Monfort</span>
+        "[QUOTE]" <span>&mdash; [QUOTED]</span>
     </p>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
@@ -167,7 +167,7 @@ array(5) {
     </span>
 </span>
         <p id="credits">
-            <em><a href="http://www.denverpost.com/kiszla/ci_25428848/kiszla-rockies-can-win-90-games-according-dick-monfort" target="_parent">Inspired by Dick Monfort</a></em>,
+            <em><a href="http://blogs.denverpost.com/rockies/recordtracker-dick_monfort/" target="_parent">Inspired by Dick Monfort</a></em>,
             <br><em>code by <a href="http://twitter.com/joemurph" target="_parent">Joe Murphy</a>.</em>
         </p>
 </div>
