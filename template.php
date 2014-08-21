@@ -150,7 +150,7 @@ array(5) {
         Record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
 
-        <span class="thermo_rate">At this rate, the Rockies will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected_wins']; ?></span> games.</span>
+        <span class="thermo_rate">At this rate, the Rockies will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected_wins']; ?></span> games. <?php echo $stats['games_left']; ?> games remain.</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
     </span>
 </span>
