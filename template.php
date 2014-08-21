@@ -118,10 +118,10 @@ $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']) + $s
 $stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']) + $stats['games_lost'];
 $stats['projected'] = $stats['projected_wins'];
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
-$config = [
+$config = array(
     'goal' => 'lose',
     'goalplural' => 'losses',
-];
+);
 if ( $config['goal'] == 'lose' )
 {
     $stats['games_to_goal'] = $stats['games_to_lose'];
@@ -194,6 +194,15 @@ var thermo = {
     {
         return this.wins_goal - this.wins;
     },
+    games_to_lose: function ()
+    {
+        return this.goal - this.losses;
+    },
+    goal: function()
+    {
+        if ( this.config.goal == 'lose' ) return this.games_to_lose();
+        return this.games_to_win();
+    }
     win_rate: function calculate_rate() 
     {
         if ( this.games_played() == 0 ) return 0;
@@ -204,10 +213,15 @@ var thermo = {
     {
         return 1 - this.win_rate();
     },
-    percent_won: function calculate_percent_won() 
+    percent_won: function () 
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
         return this.wins / this.wins_goal;
+    },
+    percent_lost: function () 
+    {
+        if ( typeof this.loss_rate() == 'string' ) return 'ZERO';
+        return this.losses / this.goal;
     },
     projected_wins: function calculate_projected_wins() 
     {
@@ -229,24 +243,25 @@ var thermo = {
     {
         if ( typeof(jQuery) != 'undefined' )
         {
-            jQuery('#headline').text(this.games_to_win() + " " + this.config.goalplural + " to go until the Rockies hit " + this.goal + " " + this.config.goalplural + ".");
+            jQuery('#headline').text(this.goal() + " " + this.config.goalplural + " to go until the Rockies hit " + this.goal + " " + this.config.goalplural + ".");
             jQuery('#wins').text(this.wins);
             jQuery('#losses').text(this.losses);
             if ( this.config.goal == 'lose' )
             {
                 jQuery('#rate').text(this.projected_losses());
+                var percent = 100 - (this.percent_lost() * 100);    
             }
             else
             {
                 jQuery('#rate').text(this.projected_wins());
+                var percent = 100 - (this.percent_won() * 100);    
             }
             jQuery('#seasons').text(this.projected_seasons() + " seasons");
-            var percent = 100 - (this.percent_lost() * 100);    
             jQuery('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
         }
     }
 };
-//thermo.init();
+thermo.init();
 </script>
 <!-- ``bookmark`` -->
 </body>
