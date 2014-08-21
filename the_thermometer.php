@@ -97,10 +97,8 @@ class UpdateData
     }
 }
 
-function runit($test=false)
+function rox_record_update($test=false)
 {
-    // I know, 'runit' is a bad idea for a function, but
-    // it's required by wp_schedule_update.
     $update = new UpdateData();
     $update->set_test($test);
     $update->get_xml();
@@ -124,7 +122,7 @@ function prefix_setup_schedule()
         wp_schedule_event(time(), 'hourly', 'prefix_hourly_event');
     endif;
 }
-add_action( 'prefix_hourly_event', 'runit' );
+add_action( 'prefix_hourly_event', 'rox_record_update' );
 endif;
 
 
@@ -139,11 +137,11 @@ if ( isset($_SERVER['argv'][0]) ):
         // Not testing, will d/l file from Sports Direct
         // To run it this way:
         // $ php the_thermometer.php notest
-        runit(false);
+        rox_record_update(false);
     else:
         // Testing, will use local files.
         // $ php the_thermometer.php
-        runit(true);
+        rox_record_update(true);
     endif;
 endif;
 
