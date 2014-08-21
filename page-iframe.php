@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Thermometer Page
+Template Name: Record Tracker Widget Page
 */
 //include(get_template_directory() . '/header.php');
 ?>
