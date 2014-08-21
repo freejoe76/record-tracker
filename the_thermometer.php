@@ -115,14 +115,14 @@ function rox_record_update($test=false)
 // We do this to get the Rockies data ingested every hour.
 // On an early action hook, check if the hook is scheduled - if not, schedule it.
 if ( function_exists('add_action') ):
-add_action( 'wp', 'prefix_setup_schedule' );
-function prefix_setup_schedule() 
+add_action( 'wp', 'recordtracker_setup_schedule' );
+function recordtracker_setup_schedule() 
 {
-    if ( ! wp_next_scheduled( 'prefix_hourly_event' ) ):
+    if ( ! wp_next_scheduled( 'recordtracker_hourly_event' ) ):
         wp_schedule_event(time(), 'hourly', 'prefix_hourly_event');
     endif;
 }
-add_action( 'prefix_hourly_event', 'rox_record_update' );
+add_action( 'recordtracker_hourly_event', 'rox_record_update' );
 endif;
 
 
@@ -152,7 +152,7 @@ endif;
 //
 // *******************
 if ( class_exists('WP_Widget') ):
-class sidebar_thermometer extends WP_Widget
+class sidebar_recordtracker extends WP_Widget
 {
     public function __construct()
     {
@@ -178,7 +178,7 @@ class sidebar_thermometer extends WP_Widget
         }
 }
 
-function register_thermometer_widget() { register_widget('sidebar_recordtracker'); }
+function register_recordtracker_widget() { register_widget('sidebar_recordtracker'); }
 add_action( 'widgets_init', 'register_recordtracker_widget' );
 endif;
 
