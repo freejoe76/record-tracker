@@ -87,7 +87,7 @@ body { padding-left:4px; }
 }
 
 /* Loss-Mode Styles */
-#thermo_seasons, #thermo_quote { display:none!important; }
+.thermo_seasons, #thermo_quote { display:none!important; }
 </style>
 <?php
 $path = '';
@@ -111,13 +111,19 @@ $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
 $stats['loss_rate'] = 1 - $stats['win_rate'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
 $stats['percent'] = 100 - ($stats['percent_won'] * 100);
-$stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']);
-$stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']);
+$stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']) + $stats['games_won'];
+$stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']) + $stats['games_lost'];
+$stats['projected'] = $stats['projected_wins'];
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
-$config = (
+$config = [
     'goal' => 'lose',
     'goalplural' => 'losses',
-);
+];
+if ( $config['goal'] == 'lose' )
+{
+    $stats['projected'] == $stats['projected_losses'];
+    $stats['projected_seasons'] = round(( $stats['goal'] * ( 1 / $stats['loss_rate'] ) ) / $stats['season'], 2);
+}
 /*
 array(5) {
   ["games_won"]=>
@@ -138,6 +144,7 @@ array(5) {
     background: -webkit-linear-gradient(top, #fff 0%, #fff <?php echo $stats['percent']; ?>%, #db3f02 <?php echo $stats['percent']; ?>%, #db3f02 100%);
 }
 </style>
+<?php var_dump($stats); ?>
 <div class="widget_item">
     <div class="categorytopper"><a href="/rockies/recordtracker/">Rockies Record Tracker</a></div>
     <p id="thermo_quote">
@@ -150,7 +157,7 @@ array(5) {
         Record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
 
-        <span class="thermo_rate">At this rate, the Rockies will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected_wins']; ?></span> games. <?php echo $stats['games_left']; ?> games remain.</span>
+        <span class="thermo_rate">At this rate, the Rockies will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games. <?php echo $stats['games_left']; ?> games remain.</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
     </span>
 </span>
@@ -200,12 +207,12 @@ var thermo = {
     projected_wins: function calculate_projected_wins() 
     {
         if ( typeof this.win_rate() == 'string' ) return 'ZERO';
-        return Math.round(this.win_rate() * this.games_left());
+        return Math.round(this.win_rate() * this.games_left()) + this.wins;
     },
     projected_losses: function () 
     {
         if ( typeof this.loss_rate() == 'string' ) return 'ZERO';
-        return Math.round(this.loss_rate() * this.games_left());
+        return Math.round(this.loss_rate() * this.games_left()) + this.losses;
     },
     projected_seasons: function calculate_seasons() 
     {
@@ -229,7 +236,7 @@ var thermo = {
                 jQuery('#rate').text(this.projected_wins());
             }
             jQuery('#seasons').text(this.projected_seasons() + " seasons");
-            var percent = 100 - (this.percent_won() * 100);    
+            var percent = 100 - (this.percent_lost() * 100);    
             jQuery('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
         }
     }
