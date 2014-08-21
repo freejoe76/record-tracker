@@ -9,7 +9,7 @@
  * License: Apache-2
  */
 
-class UpdateData
+class UpdateRecordData
 {
 
     var $xml;
@@ -99,7 +99,7 @@ class UpdateData
 
 function rox_record_update($test=false)
 {
-    $update = new UpdateData();
+    $update = new UpdateRecordData();
     $update->set_test($test);
     $update->get_xml();
     $update->write_xml();
