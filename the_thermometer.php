@@ -67,7 +67,6 @@ class UpdateRecordData
 
         $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0];
         $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0];
-        //var_dump($conferences);
 
         // Loops, loops.
         // This is, I swear, the most elegant way of getting the Rockies' element.
@@ -119,7 +118,7 @@ add_action( 'wp', 'recordtracker_setup_schedule' );
 function recordtracker_setup_schedule() 
 {
     if ( ! wp_next_scheduled( 'recordtracker_hourly_event' ) ):
-        wp_schedule_event(time(), 'hourly', 'prefix_hourly_event');
+        wp_schedule_event(time(), 'hourly', 'recordtracker_hourly_event');
     endif;
 }
 add_action( 'recordtracker_hourly_event', 'rox_record_update' );
