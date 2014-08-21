@@ -131,6 +131,7 @@ $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']) + $s
 $stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']) + $stats['games_lost'];
 $stats['projected'] = $stats['projected_wins'];
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
+
 if ( $config['goal'] == 'lose' )
 {
     $stats['games_to_goal'] = $stats['games_to_lose'];
@@ -160,7 +161,7 @@ array(5) {
 }
 </style>
 <div class="widget_item">
-    <div class="categorytopper"><a href="/rockies/recordtracker/">Rockies Record Tracker</a></div>
+    <div class="categorytopper"><a href="/rockies/recordtracker/"><?php echo $config['teamname']; ?> Record Tracker</a></div>
     <p id="thermo_quote">
         <span id="the_quote"><?php echo $config['quote']; ?></span> <span>&mdash; <span id="the_quoted"><?php echo $config['quoted']; ?></span></span>
     </p>
@@ -251,7 +252,7 @@ var thermo = {
     {
         if ( typeof(jQuery) != 'undefined' )
         {
-            jQuery('#headline').text(this.goal() + " " + this.config.goalplural + " to go until the Rockies hit " + this.goal + " " + this.config.goalplural + ".");
+            jQuery('#headline').text(this.goal() + " " + this.config.goalplural + " to go until the <?php echo $config['teamname']; ?> hit " + this.goal + " " + this.config.goalplural + ".");
             jQuery('#wins').text(this.wins);
             jQuery('#losses').text(this.losses);
             if ( this.config.goal == 'lose' )
