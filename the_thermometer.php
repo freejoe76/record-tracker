@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Rockies Record Tracker
- * Plugin URI: https://gist.github.com/freejoe76/ff90b3a0f16f33a44e43 
- * Descriphtmltion: Publish a thermometer tracking the Colorado Rockies' record in the 2014 MLB season.
- * Version: 0.1
+ * Plugin Name: Colorado Rockies Record Tracker
+ * Plugin URI: https://github.com/freejoe76/record-tracker
+ * Descriphtmltion: Publish a thermometer tracking the Colorado Rockies' record.
+ * Version: 0.2
  * Author: Joe Murphy
  * Author URI: http://joemurph.com/
  * License: Apache-2
@@ -159,9 +159,9 @@ class sidebar_thermometer extends WP_Widget
     public function __construct()
     {
             parent::__construct(
-                'sidebar_thermometer',
-                __('Rockies Win-O-Meter', 'sidebar_thermometer'),
-                array('description' => __('Publish a thermometer that tracks how close the Rockies are to 90 wins.', 'sidebar_thermometer'), )
+                'sidebar_recordtracker',
+                __('Rockies Lose-O-Meter', 'sidebar_recordtracker'),
+                array('description' => __('Publish a thermometer that tracks the Rockies record.', 'sidebar_recordtracker'), )
             );
     }
 
@@ -180,8 +180,8 @@ class sidebar_thermometer extends WP_Widget
         }
 }
 
-function register_thermometer_widget() { register_widget('sidebar_thermometer'); }
-add_action( 'widgets_init', 'register_thermometer_widget' );
+function register_thermometer_widget() { register_widget('sidebar_recordtracker'); }
+add_action( 'widgets_init', 'register_recordtracker_widget' );
 endif;
 
 
@@ -194,8 +194,8 @@ endif;
 // Code to create the page. Right now the page slug is hard-coded.
 // Note: You've got to create a page with the slug "wins" for this to work.
 if ( function_exists('add_filter') ):
-add_filter( 'template_include', 'thermometer_page_template', 99 );
-function thermometer_page_template( $template )
+add_filter( 'template_include', 'recordtracker_page_template', 99 );
+function recordtracker_page_template( $template )
 {
     if ( is_page( 'recordtracker' ) ):
         $template = dirname( __FILE__ ) . '/page.php';
