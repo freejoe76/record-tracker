@@ -246,7 +246,7 @@ var thermo = {
         }
     }
 };
-thermo.init();
+//thermo.init();
 </script>
 <!-- ``bookmark`` -->
 </body>
