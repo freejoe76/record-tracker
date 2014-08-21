@@ -107,6 +107,8 @@ endforeach;
 $stats['games_played'] = $stats['games_won'] + $stats['games_lost'];
 $stats['games_left'] = $stats['season'] - $stats['games_played'];
 $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
+$stats['games_to_lose'] = $stats['goal'] - $stats['games_lost'];
+$stats['games_to_goal'] = $stats['games_to_win'];
 $stats['win_rate'] = $stats['games_won'] / $stats['games_played'];
 $stats['loss_rate'] = 1 - $stats['win_rate'];
 $stats['percent_won'] = $stats['games_won'] / $stats['wins_goal'];
@@ -121,10 +123,12 @@ $config = [
 ];
 if ( $config['goal'] == 'lose' )
 {
-    $stats['projected'] == $stats['projected_losses'];
+    $stats['games_to_goal'] = $stats['games_to_lose'];
+    $stats['projected'] = $stats['projected_losses'];
     $stats['projected_seasons'] = round(( $stats['goal'] * ( 1 / $stats['loss_rate'] ) ) / $stats['season'], 2);
 }
 /*
+// EXISTING DATA PULLED IN VIA season.json
 array(5) {
   ["games_won"]=>
   string(1) "1"
@@ -144,7 +148,6 @@ array(5) {
     background: -webkit-linear-gradient(top, #fff 0%, #fff <?php echo $stats['percent']; ?>%, #db3f02 <?php echo $stats['percent']; ?>%, #db3f02 100%);
 }
 </style>
-<?php var_dump($stats); ?>
 <div class="widget_item">
     <div class="categorytopper"><a href="/rockies/recordtracker/">Rockies Record Tracker</a></div>
     <p id="thermo_quote">
@@ -152,7 +155,7 @@ array(5) {
     </p>
 <span class="thermometer">
     <span class="thermo_label" id="thermo-text">
-        <span id="headline"><?php echo $stats['games_to_win']; ?> <?php echo $config['goalplural']; ?> to go until the Rockies hit <?php echo $stats['goal']; ?> <?php echo $config['goalplural']; ?>.</span><br>
+        <span id="headline"><?php echo $stats['games_to_goal']; ?> <?php echo $config['goalplural']; ?> until the Rockies hit <?php echo $stats['goal']; ?> <?php echo $config['goalplural']; ?>.</span><br>
         <span id="record">
         Record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
