@@ -19,7 +19,7 @@ class UpdateRecordData
 
     function __construct()
     {
-        $this->url = 'http://xml.sportsdirectinc.com/sport/v2/baseball/MLB/standings/2014/standings_MLB.xml';
+        $this->url = 'http://xml.sportsdirectinc.com/sport/v2/baseball/MLB/standings/2015/standings_MLB.xml';
         $this->test = true;
         $this->path_prefix = '';
         if ( function_exists('plugin_dir_path') ):
@@ -65,7 +65,7 @@ class UpdateRecordData
         endif;
         $object = simplexml_load_string($this->xml);
 
-        $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0];
+        //$conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'conference-content'}[0];
         $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0];
 
         // Loops, loops.
@@ -189,7 +189,7 @@ endif;
 //
 // *******************
 // Code to create the page. Right now the page slug is hard-coded.
-// Note: You've got to create a page with the slug "wins" for this to work.
+// Note: You've got to create a page with the slug "recordtracker" for this to work.
 if ( function_exists('add_filter') ):
 add_filter( 'template_include', 'recordtracker_page_template', 99 );
 function recordtracker_page_template( $template )
