@@ -18,8 +18,8 @@
 <?php
 // POSSIBLE VALUES: win / lose
 $config = array(
-    'goal' => 'lose',
-    'goalplural' => 'losses',
+    'goal' => 'win',
+    'goalplural' => 'wins',
     'teamname' => 'Rockies',
     'quote' => '',
     'quoted' => '',
@@ -112,8 +112,8 @@ $json = file_get_contents($path);
 $json_object = json_decode($json, true);
 $stats = array(
     'season' => 162,
-    'wins_goal' => 96,
-    'goal' => 100);
+    'wins_goal' => 75,
+    'goal' => 75);
 foreach ( $json_object['stat'] as $item ):
     $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
 endforeach;
