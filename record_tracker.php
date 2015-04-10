@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Colorado Rockies Record Tracker
  * Plugin URI: https://github.com/freejoe76/record-tracker
- * Descriphtmltion: Publish a thermometer tracking the Colorado Rockies' record.
+ * Description: Publish a thermometer tracking the Colorado Rockies' record.
  * Version: 0.2
  * Author: Joe Murphy
  * Author URI: http://joemurph.com/
@@ -135,11 +135,11 @@ if ( isset($_SERVER['argv'][0]) ):
     if ( isset($_SERVER['argv'][1]) ):
         // Not testing, will d/l file from Sports Direct
         // To run it this way:
-        // $ php the_thermometer.php notest
+        // $ php record_tracker.php notest
         rox_record_update(false);
     else:
         // Testing, will use local files.
-        // $ php the_thermometer.php
+        // $ php record_tracker.php
         rox_record_update(true);
     endif;
 endif;

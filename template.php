@@ -132,6 +132,8 @@ $stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']) +
 $stats['projected'] = $stats['projected_wins'];
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
 
+if ( trim($stats['games_lost']) == '' ) $stats['games_lost'] = 0;
+
 if ( $config['goal'] == 'lose' )
 {
     $stats['games_to_goal'] = $stats['games_to_lose'];
