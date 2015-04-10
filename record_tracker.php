@@ -69,7 +69,7 @@ class UpdateRecordData
         $conferences = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0];
 
         // Loops, loops.
-        // This is, I swear, the most elegant way of getting the Rockies' element.
+        // This is, I swear, the most elegant way of getting the data element.
         foreach ( $conferences->children() as $conference):
             if ( $conference->conference->name == 'National League' ):
                 foreach ( $conference->children() as $division):
@@ -111,7 +111,7 @@ function rox_record_update($test=false)
 // CRONTAB
 //
 // *******************
-// We do this to get the Rockies data ingested every hour.
+// We do this to get the data ingested every hour.
 // On an early action hook, check if the hook is scheduled - if not, schedule it.
 if ( function_exists('add_action') ):
 add_action( 'wp', 'recordtracker_setup_schedule' );
@@ -157,14 +157,13 @@ class sidebar_recordtracker extends WP_Widget
     {
             parent::__construct(
                 'sidebar_recordtracker',
-                __('Rockies Lose-O-Meter', 'sidebar_recordtracker'),
+                __('Rockies Record Tracker', 'sidebar_recordtracker'),
                 array('description' => __('Publish a thermometer that tracks the Rockies record.', 'sidebar_recordtracker'), )
             );
     }
 
     public function widget($args, $instance)
     {
-        // 
         $path_prefix = '';
         if ( function_exists('plugin_dir_path') ):
             $path_prefix = plugin_dir_path( __FILE__ );
@@ -174,7 +173,7 @@ class sidebar_recordtracker extends WP_Widget
             ';
         include($path_prefix . 'template-widget.php');
         echo '    <!-- ##ENDTHERMOMETER## -->';
-        }
+    }
 }
 
 function register_recordtracker_widget() { register_widget('sidebar_recordtracker'); }
