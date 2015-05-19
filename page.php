@@ -4,7 +4,7 @@ Template Name: Record Tracker Page
 */
 include(get_template_directory() . '/header.php');
 ?>
-     <div class="page" id="content">
+     <div class="page-class-made-it-worse" id="content">
 	  <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	       <div class="post">
 		    <div id="post-<?php the_ID(); ?>">
@@ -18,8 +18,8 @@ include(get_template_directory() . '/header.php');
      
     	       <?php endwhile; ?>
 	       <?php endif; ?>
-     </div><!-- Closes the content div-->
 <img src="https://pbs.twimg.com/media/CFYTzY8W8AANm8o.jpg" alt="Colorado Rockies" width="599" height="337" style="margin:5px;">
+     </div><!-- Closes the content div-->
      
 
 	<?php include(get_template_directory() . '/sidebar2.php'); ?>
