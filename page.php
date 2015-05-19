@@ -18,7 +18,7 @@ include(get_template_directory() . '/header.php');
      
     	       <?php endwhile; ?>
 	       <?php endif; ?>
-<img src="https://pbs.twimg.com/media/CFYTzY8W8AANm8o.jpg" alt="Colorado Rockies" width="599" height="337" style="margin:5px;">
+<img src="https://pbs.twimg.com/media/CFYTzY8W8AANm8o.jpg" alt="Colorado Rockies" width="599" height="337" style="margin:20px;">
      </div><!-- Closes the content div-->
      
 
