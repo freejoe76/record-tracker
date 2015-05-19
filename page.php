@@ -4,7 +4,7 @@ Template Name: Record Tracker Page
 */
 include(get_template_directory() . '/header.php');
 ?>
-     <div id="content">
+     <div class="page" id="content">
 	  <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	       <div class="post">
 		    <div id="post-<?php the_ID(); ?>">
