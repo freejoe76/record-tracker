@@ -5,6 +5,7 @@ Template Name: Record Tracker Page
 include(get_template_directory() . '/header.php');
 ?>
      <div class="page" id="content">
+<img src="https://pbs.twimg.com/media/CFYTzY8W8AANm8o.jpg" alt="Colorado Rockies">
 	  <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	       <div class="post">
 		    <div id="post-<?php the_ID(); ?>">
