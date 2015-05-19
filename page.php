@@ -18,8 +18,8 @@ include(get_template_directory() . '/header.php');
      
     	       <?php endwhile; ?>
 	       <?php endif; ?>
-<img src="https://pbs.twimg.com/media/CFYTzY8W8AANm8o.jpg" alt="Colorado Rockies">
      </div><!-- Closes the content div-->
+<img src="https://pbs.twimg.com/media/CFYTzY8W8AANm8o.jpg" alt="Colorado Rockies" width="599" height="337" style="margin:5px;">
      
 
 	<?php include(get_template_directory() . '/sidebar2.php'); ?>
