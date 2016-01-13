@@ -10,7 +10,7 @@ Note: This plugin requires a source for win/loss data.
 1. In the wp-admin create two pages, one slugged recordtracker and the other slugged recordtracker-include
 
 # License
-Copyright © 2014-2015 Joe Murphy
+Copyright © 2014-2016 Joe Murphy
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License. You may obtain a copy of the
