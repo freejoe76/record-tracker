@@ -30,14 +30,14 @@ class UpdateRecordData
             $this->xml = $this->get_xml();
         endif;
         if ( $this->xml != false ):
-            return file_put_contents($this->path_prefix . 'updates.xml', $this->xml);
+            return file_put_contents($this->path_prefix . 'tmp.xml', $this->xml);
         endif;
         return false;
     }
 
     public function parse_xml()
     {
-        // Take the xml in updates.xml and pull out the chunk that we want.
+        // Take the xml and pull out the chunk that we want.
         // Will have to build this method out if we want to measure things
         // in addition to the Rockies wins.
         if ( $this->xml === false ):
