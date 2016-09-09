@@ -8,7 +8,7 @@
     <style type="text/css" media="screen">
     /* Full-page specific styles */
      .thermometer {
-        margin-left:200px;
+        margin-left:0;
     }
     </style>
 </head>
@@ -80,8 +80,8 @@ body { padding-left:4px; }
     display:block;
 }
  p#credits {
-    padding-top:150px;
-    padding-left:55px;
+    padding-top:210px;
+    padding-left:0;
     line-height:1.2em;
     font-size:13px;
 }
