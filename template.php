@@ -180,7 +180,8 @@ array(5) {
         Current record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
 
-        <span class="thermo_rate">At the rate the <?php echo $config['teamname']; ?> have played this season, they will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games. At the rate the have played the previous ten games, they will win <?php echo $last_ten['projected']; ?>.
+        <span class="thermo_rate">At the rate the <?php echo $config['teamname']; ?> have won this season, they are projected to <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games.
+            Based on the win-rate of the <?php echo $config['teamname']; ?>' previous ten games, they will win <?php echo $last_ten['projected']; ?>.
             <?php echo $stats['games_left']; ?> games remain.</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
     </span>
@@ -189,98 +190,6 @@ array(5) {
 <?php echo $config['credits']; ?>
         </p>
 </div>
-<script>
-var thermo = {
-    config: {
-        goal: '<?php echo $config['goal']; ?>',
-        goalplural: '<?php echo $config['goalplural']; ?>'
-    },
-    season: <?php echo $stats['season']; ?>,
-    wins: <?php echo $stats['games_won']; ?>,
-    losses: <?php echo $stats['games_lost']; ?>,
-    wins_goal: <?php echo $stats['wins_goal']; ?>,
-    goal: <?php echo $stats['goal']; ?>,
-    games_played: function calculate_games_played() 
-    {
-        return this.wins + this.losses;
-    },
-    games_left: function calculate_games_left()
-    {
-        return this.season - this.games_played();
-    },
-    games_to_win: function calculate_to_win()
-    {
-        return this.wins_goal - this.wins;
-    },
-    games_to_lose: function ()
-    {
-        return this.goal - this.losses;
-    },
-    goal: function()
-    {
-        if ( this.config.goal == 'lose' ) return this.games_to_lose();
-        return this.games_to_win();
-    }
-    win_rate: function calculate_rate() 
-    {
-        if ( this.games_played() == 0 ) return 0;
-        if ( this.wins == 0 && this.losses > 0 ) return '∞';
-        return this.wins / this.games_played();
-    },
-    loss_rate: function () 
-    {
-        return 1 - this.win_rate();
-    },
-    percent_won: function () 
-    {
-        if ( typeof this.win_rate() == 'string' ) return 'ZERO';
-        return this.wins / this.wins_goal;
-    },
-    percent_lost: function () 
-    {
-        if ( typeof this.loss_rate() == 'string' ) return 'ZERO';
-        return this.losses / this.goal;
-    },
-    projected_wins: function calculate_projected_wins() 
-    {
-        if ( typeof this.win_rate() == 'string' ) return 'ZERO';
-        return Math.round(this.win_rate() * this.games_left()) + this.wins;
-    },
-    projected_losses: function () 
-    {
-        if ( typeof this.loss_rate() == 'string' ) return 'ZERO';
-        return Math.round(this.loss_rate() * this.games_left()) + this.losses;
-    },
-    projected_seasons: function calculate_seasons() 
-    {
-        if ( typeof this.win_rate() == 'string' ) return 'FOREVER';
-        return Math.round((( this.wins_goal * ( 1 / this.win_rate() ) ) / this.season) * 10) / 10;
-         
-    },
-    init: function init()
-    {
-        if ( typeof(jQuery) != 'undefined' )
-        {
-            jQuery('#headline').text(this.goal() + " " + this.config.goalplural + " until the <?php echo $config['teamname']; ?> hit " + this.goal + " " + this.config.goalplural + ".");
-            jQuery('#wins').text(this.wins);
-            jQuery('#losses').text(this.losses);
-            if ( this.config.goal == 'lose' )
-            {
-                jQuery('#rate').text(this.projected_losses());
-                var percent = 100 - (this.percent_lost() * 100);    
-            }
-            else
-            {
-                jQuery('#rate').text(this.projected_wins());
-                var percent = 100 - (this.percent_won() * 100);    
-            }
-            jQuery('#seasons').text(this.projected_seasons() + " seasons");
-            jQuery('.thermometer').css('background', '-webkit-linear-gradient(top, #fff 0%, #fff ' + percent + '%, #db3f02 ' + percent + '%, #db3f02 100%)');
-        }
-    }
-};
-thermo.init();
-</script>
 </body>
 </html>
 <?php
