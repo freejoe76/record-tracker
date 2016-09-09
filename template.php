@@ -100,10 +100,7 @@ body { padding-left:4px; }
 .thermo_seasons, #thermo_quote { display:none!important; }
 </style>
 <?php
-$path = '';
-if ( function_exists('plugin_dir_path') ):
-    $path .= plugin_dir_path( __FILE__ );
-endif;
+$path = 'output/';
 $path .= 'season.json';
 $json = file_get_contents($path);
 $json_object = json_decode($json, true);
