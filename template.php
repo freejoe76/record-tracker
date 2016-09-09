@@ -100,17 +100,24 @@ body { padding-left:4px; }
 .thermo_seasons, #thermo_quote { display:none!important; }
 </style>
 <?php
-$path = 'output/';
-$path .= 'season.json';
-$json = file_get_contents($path);
-$json_object = json_decode($json, true);
+function get_stats($path)
+{
+    // Return an arrary of the statistics from the json file specified.
+    $json = file_get_contents($path);
+    $json_object = json_decode($json, true);
+    foreach ( $json_object['stat'] as $item ):
+        $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
+    endforeach;
+    return $stats;
+}
+
+// Get the rest of the stats
 $stats = array(
     'season' => 162,
     'wins_goal' => 81,
     'goal' => 81);
-foreach ( $json_object['stat'] as $item ):
-    $stats[$item['@attributes']['type']] = $item['@attributes']['num'];
-endforeach;
+$stats = array_merge($stats, get_stats('output/season.json'));
+
 $stats['games_played'] = $stats['games_won'] + $stats['games_lost'];
 $stats['games_left'] = $stats['season'] - $stats['games_played'];
 $stats['games_to_win'] = $stats['wins_goal'] - $stats['games_won'];
@@ -125,6 +132,11 @@ $stats['projected_wins'] = round($stats['win_rate'] * $stats['games_left']) + $s
 $stats['projected_losses'] = round($stats['loss_rate'] * $stats['games_left']) + $stats['games_lost'];
 $stats['projected'] = $stats['projected_wins'];
 $stats['projected_seasons'] = round(( $stats['wins_goal'] * ( 1 / $stats['win_rate'] ) ) / $stats['season'], 2);
+
+// Get the numbers on the last ten games
+$last_ten = get_stats('output/last_ten.json');
+$last_ten['win_rate'] = $last_ten['games_won'] / 10;
+$last_ten['projected'] = round($last_ten['win_rate'] * $stats['games_left']) + $stats['games_won'];
 
 if ( trim($stats['games_lost']) == '' ) $stats['games_lost'] = 0;
 
@@ -168,7 +180,8 @@ array(5) {
         Current record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
         </span>
 
-        <span class="thermo_rate">At this rate, the <?php echo $config['teamname']; ?> will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games. <?php echo $stats['games_left']; ?> games remain.</span>
+        <span class="thermo_rate">At the rate the <?php echo $config['teamname']; ?> have played this season, they will <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games. At the rate the have played the previous ten games, they will win <?php echo $last_ten['projected']; ?>.
+            <?php echo $stats['games_left']; ?> games remain.</span>
         <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
     </span>
 </span>
@@ -271,6 +284,6 @@ thermo.init();
 </body>
 </html>
 <?php
-$markup = ob_get_clean();
+$markup = ob_get_flush();
 file_put_contents('output/index.html', $markup);
 ?>
