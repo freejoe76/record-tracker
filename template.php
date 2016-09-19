@@ -11,6 +11,8 @@
         margin-left:0;
     }
     </style>
+    <script src="http://crime.denverpost.com/static/js/d3.v3.min.js" charset="utf-8"></script>
+
 </head>
 <body>
 <?php
@@ -26,56 +28,28 @@ $config = array(
 );
 ?>
 <style type="text/css" media="screen">
+#thermo { 
+    float: left;
+}
 /* Blogs template override */
 #wrapper { background-color: transparent; }
-body { padding-left:4px; }
-
-/* Thermometer column and text. Source: http://jsfiddle.net/gBW3Y/252/ */
+body {
+    padding-left:4px;
+    font:bold 14px/152px helvetica, arial, sans-serif;
+}
  .thermometer {
     width:22px;
     height:150px;
     display:block;
     font:bold 14px/152px helvetica, arial, sans-serif;
     text-indent: 36px;
-    border-radius:22px 22px 0 0;
-    border:5px solid #4a1c03;
-    border-bottom:none;
-    position:absolute;
-    box-shadow:inset 0 0 0 4px #fff;
     color:#4a1c03;
-}
-/* Thermometer Bulb */
- .thermometer:before {
-    content:' ';
-    width:44px;
-    height:44px;
-    display:block;
-    position:absolute;
-    top:142px;
-    left:-16px;
-    z-index:-1;
-    /* Place the bulb under the column */
-    background:#db3f02;
-    border-radius:44px;
-    border:5px solid #4a1c03;
-    box-shadow:inset 0 0 0 4px #fff;
-}
-/* This piece here connects the column with the bulb */
- .thermometer:after {
-    content:' ';
-    width:14px;
-    height:7px;
-    display:block;
-    position:absolute;
-    top:146px;
-    left:4px;
-    background:#db3f02;
 }
  .thermo_label {
     text-indent:0;
     font:bold 14px/20px helvetica, arial, sans-serif;
     width:230px;
-    left:50px;
+    left:100px;
     position:absolute;
     display:block;
 }
@@ -85,6 +59,7 @@ body { padding-left:4px; }
     line-height:1.2em;
     font-size:13px;
 }
+
 #record, .thermo_rate, .thermo_seasons, #credits { font-weight: normal; }
 #thermo_quote { display:none; }
 .widget_item .categorytopper { display:none;}
@@ -164,32 +139,250 @@ array(5) {
 */
 ?>
 <style type="text/css">
+/*
  .thermometer {
     background: -webkit-linear-gradient(top, #fff 0%, #fff <?php echo $stats['percent']; ?>%, #db3f02 <?php echo $stats['percent']; ?>%, #db3f02 100%);
 }
+*/
 </style>
 <div class="widget_item">
     <div class="categorytopper"><a href="/rockies/recordtracker/"><?php echo $config['teamname']; ?> Record Tracker</a></div>
     <p id="thermo_quote">
         <span id="the_quote"><?php echo $config['quote']; ?></span> <span>&mdash; <span id="the_quoted"><?php echo $config['quoted']; ?></span></span>
     </p>
-<span class="thermometer">
-    <span class="thermo_label" id="thermo-text">
-        <span id="headline">The <?php echo $config['teamname']; ?> need <?php echo $stats['games_to_goal']; ?> more <?php echo $config['goalplural']; ?> to reach .500 for the season.</span><br>
-        <span id="record">
-        Current record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
-        </span>
 
-        <span class="thermo_rate">At the rate the <?php echo $config['teamname']; ?> have won this season, they are projected to <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games.
-            Based on the win-rate of the <?php echo $config['teamname']; ?>' previous ten games, they will win <?php echo $last_ten['projected']; ?>.
-            <?php echo $stats['games_left']; ?> games remain.</span>
-        <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
+    <div id="thermo"></div>
+    <span class="thermometer">
+        <span class="thermo_label" id="thermo-text">
+            <span id="headline">The <?php echo $config['teamname']; ?> need <?php echo $stats['games_to_goal']; ?> more <?php echo $config['goalplural']; ?> to reach .500 for the season.</span><br>
+            <span id="record">
+            Current record: <span id="wins"><?php echo $stats['games_won']; ?></span> wins, <span id="losses"><?php echo $stats['games_lost']; ?></span> losses.<br><br>
+            </span>
+
+            <span class="thermo_rate">At the rate the <?php echo $config['teamname']; ?> have won this season, they are projected to <?php echo $config['goal']; ?> <span id="rate"><?php echo $stats['projected']; ?></span> games.
+                Based on the win-rate of the <?php echo $config['teamname']; ?>' previous ten games, they will win <?php echo $last_ten['projected']; ?>.
+                <?php echo $stats['games_left']; ?> games remain.</span>
+            <span class="thermo_seasons">and it will take <span id="seasons"><?php echo $stats['projected_seasons']; ?> seasons</span> to win <?php echo $stats['wins_goal']; ?>.</span><br>
+        </span>
     </span>
-</span>
         <p id="credits">
 <?php echo $config['credits']; ?>
         </p>
 </div>
+<script>
+var width = 80,
+    height = 180,
+    maxTemp = 20.2,
+    minTemp = 15.4,
+    currentTemp = 19.2;
+
+var bottomY = height - 5,
+    topY = 5,
+    bulbRadius = 20,
+    tubeWidth = 21.5,
+    tubeBorderWidth = 1,
+    mercuryColor = "rgb(230,0,0)",
+    innerBulbColor = "rgb(230, 200, 200)"
+    tubeBorderColor = "#999999";
+
+var bulb_cy = bottomY - bulbRadius,
+    bulb_cx = width/2,
+    top_cy = topY + tubeWidth/2;
+
+
+var svg = d3.select("#thermo")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+
+var defs = svg.append("defs");
+
+// Define the radial gradient for the bulb fill colour
+var bulbGradient = defs.append("radialGradient")
+  .attr("id", "bulbGradient")
+  .attr("cx", "50%")
+  .attr("cy", "50%")
+  .attr("r", "50%")
+  .attr("fx", "50%")
+  .attr("fy", "50%");
+
+bulbGradient.append("stop")
+  .attr("offset", "0%")
+  .style("stop-color", innerBulbColor);
+
+bulbGradient.append("stop")
+  .attr("offset", "90%")
+  .style("stop-color", mercuryColor);
+
+
+
+
+// Circle element for rounded tube top
+svg.append("circle")
+  .attr("r", tubeWidth/2)
+  .attr("cx", width/2)
+  .attr("cy", top_cy)
+  .style("fill", "#FFFFFF")
+  .style("stroke", tubeBorderColor)
+  .style("stroke-width", tubeBorderWidth + "px");
+
+
+// Rect element for tube
+svg.append("rect")
+  .attr("x", width/2 - tubeWidth/2)
+  .attr("y", top_cy)
+  .attr("height", bulb_cy - top_cy)
+  .attr("width", tubeWidth)
+  .style("shape-rendering", "crispEdges")
+  .style("fill", "#FFFFFF")
+  .style("stroke", tubeBorderColor)
+  .style("stroke-width", tubeBorderWidth + "px");
+
+
+// White fill for rounded tube top circle element
+// to hide the border at the top of the tube rect element
+svg.append("circle")
+  .attr("r", tubeWidth/2 - tubeBorderWidth/2)
+  .attr("cx", width/2)
+  .attr("cy", top_cy)
+  .style("fill", "#FFFFFF")
+  .style("stroke", "none")
+
+
+
+// Main bulb of thermometer (empty), white fill
+svg.append("circle")
+  .attr("r", bulbRadius)
+  .attr("cx", bulb_cx)
+  .attr("cy", bulb_cy)
+  .style("fill", "#FFFFFF")
+  .style("stroke", tubeBorderColor)
+  .style("stroke-width", tubeBorderWidth + "px");
+
+
+// Rect element for tube fill colour
+svg.append("rect")
+  .attr("x", width/2 - (tubeWidth - tubeBorderWidth)/2)
+  .attr("y", top_cy)
+  .attr("height", bulb_cy - top_cy)
+  .attr("width", tubeWidth - tubeBorderWidth)
+  .style("shape-rendering", "crispEdges")
+  .style("fill", "#FFFFFF")
+  .style("stroke", "none");
+
+
+// Scale step size
+var step = 5;
+
+// Determine a suitable range of the temperature scale
+var domain = [
+  step * Math.floor(minTemp / step),
+  step * Math.ceil(maxTemp / step)
+  ];
+
+if (minTemp - domain[0] < 0.66 * step)
+  domain[0] -= step;
+
+if (domain[1] - maxTemp < 0.66 * step)
+  domain[1] += step;
+
+
+// D3 scale object
+var scale = d3.scale.linear()
+  .range([bulb_cy - bulbRadius/2 - 8.5, top_cy])
+  .domain(domain);
+
+
+// Max and min temperature lines
+[minTemp, maxTemp].forEach(function(t) {
+
+  var isMax = (t == maxTemp),
+      label = (isMax ? "max" : "min"),
+      textCol = (isMax ? "rgb(230, 0, 0)" : "rgb(0, 0, 230)"),
+      textOffset = (isMax ? -4 : 4);
+
+  svg.append("line")
+    .attr("id", label + "Line")
+    .attr("x1", width/2 - tubeWidth/2)
+    .attr("x2", width/2 + tubeWidth/2 + 22)
+    .attr("y1", scale(t))
+    .attr("y2", scale(t))
+    .style("stroke", tubeBorderColor)
+    .style("stroke-width", "1px")
+    .style("shape-rendering", "crispEdges");
+
+  svg.append("text")
+    .attr("x", width/2 + tubeWidth/2 + 2)
+    .attr("y", scale(t) + textOffset)
+    .attr("dy", isMax ? null : "0.75em")
+    .text(label)
+    .style("fill", textCol)
+    .style("font-size", "11px")
+
+});
+
+
+var tubeFill_bottom = bulb_cy,
+    tubeFill_top = scale(currentTemp);
+
+// Rect element for the red mercury column
+svg.append("rect")
+  .attr("x", width/2 - (tubeWidth - 10)/2)
+  .attr("y", tubeFill_top)
+  .attr("width", tubeWidth - 10)
+  .attr("height", tubeFill_bottom - tubeFill_top)
+  .style("shape-rendering", "crispEdges")
+  .style("fill", mercuryColor)
+
+
+// Main thermometer bulb fill
+svg.append("circle")
+  .attr("r", bulbRadius - 6)
+  .attr("cx", bulb_cx)
+  .attr("cy", bulb_cy)
+  .style("fill", "url(#bulbGradient)")
+  .style("stroke", mercuryColor)
+  .style("stroke-width", "2px");
+
+
+// Values to use along the scale ticks up the thermometer
+var tickValues = d3.range((domain[1] - domain[0])/step + 1).map(function(v) { return domain[0] + v * step; });
+
+
+// D3 axis object for the temperature scale
+var axis = d3.svg.axis()
+  .scale(scale)
+  .innerTickSize(7)
+  .outerTickSize(0)
+  .tickValues(tickValues)
+  .orient("left");
+
+// Add the axis to the image
+var svgAxis = svg.append("g")
+  .attr("id", "tempScale")
+  .attr("transform", "translate(" + (width/2 - tubeWidth/2) + ",0)")
+  .call(axis);
+
+// Format text labels
+svgAxis.selectAll(".tick text")
+    .style("fill", "#777777")
+    .style("font-size", "10px");
+
+// Set main axis line to no stroke or fill
+svgAxis.select("path")
+  .style("stroke", "none")
+  .style("fill", "none")
+
+// Set the style of the ticks 
+svgAxis.selectAll(".tick line")
+  .style("stroke", tubeBorderColor)
+  .style("shape-rendering", "crispEdges")
+  .style("stroke-width", "1px");
+
+
+
+</script>
 </body>
 </html>
 <?php
