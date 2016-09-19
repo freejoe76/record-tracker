@@ -30,6 +30,7 @@ $config = array(
 <style type="text/css" media="screen">
 #thermo { 
     float: left;
+    margin-left: -33px;
 }
 /* Blogs template override */
 #wrapper { background-color: transparent; }
@@ -54,7 +55,7 @@ body {
     display:block;
 }
  p#credits {
-    padding-top:210px;
+    padding-top:40px;
     padding-left:0;
     line-height:1.2em;
     font-size:13px;
@@ -170,20 +171,21 @@ array(5) {
         </p>
 </div>
 <script>
-var width = 80,
+// d3 thermometer from https://codepen.io/davidbanks/pen/rksLn
+var width = 120,
     height = 180,
-    maxTemp = 20.2,
-    minTemp = 15.4,
-    currentTemp = 19.2;
+    maxTemp = 81,
+    minTemp = 67,
+    currentTemp = <?php echo $stats['games_won']; ?>;
 
 var bottomY = height - 5,
     topY = 5,
     bulbRadius = 20,
     tubeWidth = 21.5,
-    tubeBorderWidth = 1,
-    mercuryColor = "rgb(230,0,0)",
-    innerBulbColor = "rgb(230, 200, 200)"
-    tubeBorderColor = "#999999";
+    tubeBorderWidth = 4,
+    mercuryColor = "#db3f02",
+    innerBulbColor = "#db3f02"
+    tubeBorderColor = "#4a1c03";
 
 var bulb_cy = bottomY - bulbRadius,
     bulb_cx = width/2,
@@ -290,22 +292,22 @@ if (domain[1] - maxTemp < 0.66 * step)
 
 // D3 scale object
 var scale = d3.scale.linear()
-  .range([bulb_cy - bulbRadius/2 - 8.5, top_cy])
+  .range([bulb_cy - bulbRadius/2 - 5.5, top_cy])
   .domain(domain);
 
 
 // Max and min temperature lines
-[minTemp, maxTemp].forEach(function(t) {
+[maxTemp].forEach(function(t) {
 
   var isMax = (t == maxTemp),
-      label = (isMax ? "max" : "min"),
+      label = (isMax ? "81 wins" : "wins"),
       textCol = (isMax ? "rgb(230, 0, 0)" : "rgb(0, 0, 230)"),
       textOffset = (isMax ? -4 : 4);
 
   svg.append("line")
     .attr("id", label + "Line")
     .attr("x1", width/2 - tubeWidth/2)
-    .attr("x2", width/2 + tubeWidth/2 + 22)
+    .attr("x2", width/2 + tubeWidth/2 + 45)
     .attr("y1", scale(t))
     .attr("y2", scale(t))
     .style("stroke", tubeBorderColor)
@@ -313,7 +315,7 @@ var scale = d3.scale.linear()
     .style("shape-rendering", "crispEdges");
 
   svg.append("text")
-    .attr("x", width/2 + tubeWidth/2 + 2)
+    .attr("x", width/2 + tubeWidth/2 + 5)
     .attr("y", scale(t) + textOffset)
     .attr("dy", isMax ? null : "0.75em")
     .text(label)
